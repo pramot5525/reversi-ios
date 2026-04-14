@@ -1,80 +1,46 @@
 import SwiftUI
 
-struct DiscView: View {
+struct AnimalPieceView: View {
     let state: CellState
+    let game: ReversiGame
 
     @State private var displayedState: CellState = .empty
+    @State private var showPiece: Bool = false
     @State private var isFlipping: Bool = false
-    @State private var showDisc: Bool = false
 
-    private var discColor: Color {
-        displayedState == .black ? .black : .white
-    }
-
-    private var edgeColor: Color {
-        displayedState == .black ? Color(white: 0.25) : Color(white: 0.85)
+    private var pieceText: String {
+        game.pieceForCell(displayedState)
     }
 
     var body: some View {
         ZStack {
-            if showDisc {
-                // Disc with gradient for 3D feel
-                Circle()
-                    .fill(
-                        RadialGradient(
-                            colors: [discColor.opacity(0.9), discColor],
-                            center: .init(x: 0.35, y: 0.35),
-                            startRadius: 0,
-                            endRadius: 20
-                        )
-                    )
-                    .overlay(
-                        Circle()
-                            .stroke(edgeColor, lineWidth: 1.5)
-                    )
-                    .overlay(
-                        // Specular highlight
-                        Circle()
-                            .fill(
-                                RadialGradient(
-                                    colors: [.white.opacity(0.4), .clear],
-                                    center: .init(x: 0.3, y: 0.3),
-                                    startRadius: 0,
-                                    endRadius: 12
-                                )
-                            )
-                            .scaleEffect(0.5)
-                            .offset(x: -4, y: -4)
-                    )
-                    .padding(5)
-                    .shadow(color: .black.opacity(0.4), radius: 2, x: 1, y: 2)
-                    .rotation3DEffect(
-                        .degrees(isFlipping ? 180 : 0),
-                        axis: (x: 0, y: 1, z: 0),
-                        perspective: 0.5
-                    )
+            if showPiece {
+                Text(pieceText)
+                    .font(.system(size: 28))
+                    .scaleEffect(isFlipping ? 0.3 : 1.0)
+                    .rotationEffect(.degrees(isFlipping ? 180 : 0))
+                    .shadow(color: .black.opacity(0.3), radius: 2, x: 1, y: 2)
                     .transition(.scale.combined(with: .opacity))
             }
         }
         .onChange(of: state) { oldValue, newValue in
             if oldValue == .empty && newValue != .empty {
-                // New piece — pop in
                 displayedState = newValue
                 withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) {
-                    showDisc = true
+                    showPiece = true
                 }
             } else if oldValue != .empty && newValue != .empty && oldValue != newValue {
-                // Flip — smooth Y-axis rotation
-                withAnimation(.easeInOut(duration: 0.4)) {
+                withAnimation(.easeInOut(duration: 0.3)) {
                     isFlipping = true
                 } completion: {
                     displayedState = newValue
-                    isFlipping = false
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        isFlipping = false
+                    }
                 }
             } else if newValue == .empty {
-                // Reset — shrink out
                 withAnimation(.easeIn(duration: 0.15)) {
-                    showDisc = false
+                    showPiece = false
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                     displayedState = .empty
@@ -85,7 +51,7 @@ struct DiscView: View {
         .onAppear {
             if state != .empty {
                 displayedState = state
-                showDisc = true
+                showPiece = true
             }
         }
     }
@@ -94,22 +60,42 @@ struct DiscView: View {
 struct CellView: View {
     let state: CellState
     let isValidMove: Bool
+    let game: ReversiGame
     let action: () -> Void
+
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var bgColor: Color {
+        colorScheme == .dark
+            ? Color(red: 0.18, green: 0.35, blue: 0.22)
+            : Color(red: 0.45, green: 0.75, blue: 0.35)
+    }
+
+    private var borderColor: Color {
+        colorScheme == .dark
+            ? Color.green.opacity(0.15)
+            : Color.green.opacity(0.3)
+    }
 
     var body: some View {
         Button(action: action) {
             ZStack {
                 Rectangle()
-                    .fill(Color(red: 0.1, green: 0.55, blue: 0.2))
-                    .border(Color.black.opacity(0.25), width: 0.5)
+                    .fill(bgColor)
+                    .border(borderColor, width: 0.5)
 
                 if isValidMove {
                     Circle()
-                        .stroke(Color.white.opacity(0.5), lineWidth: 1.5)
-                        .padding(8)
+                        .fill(Color.white.opacity(0.2))
+                        .padding(6)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.white.opacity(0.5), lineWidth: 1.5)
+                                .padding(6)
+                        )
                 }
 
-                DiscView(state: state)
+                AnimalPieceView(state: state, game: game)
             }
         }
         .buttonStyle(.plain)

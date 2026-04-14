@@ -8,19 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		4F7A2F092F6FF76400FAC49A /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7A2F082F6FF76400FAC49A /* GoogleMobileAds */; };
-		4F7A2F0B2F6FF82100FAC49A /* AdConstants 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A2F0A2F6FF82000FAC49A /* AdConstants 2.swift */; };
-		4F7A2F0D2F6FF82500FAC49A /* BannerAdView 2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A2F0C2F6FF82500FAC49A /* BannerAdView 2.swift */; };
 		A1000001 /* ReversiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001 /* ReversiApp.swift */; };
 		A1000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002 /* ContentView.swift */; };
 		A1000003 /* ReversiGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000003 /* ReversiGame.swift */; };
 		A1000004 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000004 /* BoardView.swift */; };
 		A1000005 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000005 /* CellView.swift */; };
 		A1000006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000006 /* Assets.xcassets */; };
+		ED76526B2F8E38E600411B80 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76526A2F8E38E600411B80 /* SoundManager.swift */; };
+		ED76526D2F8E80CD00411B80 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76526C2F8E80CD00411B80 /* GameSettings.swift */; };
+		ED76526F2F8E81BA00411B80 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76526E2F8E81BA00411B80 /* StoreManager.swift */; };
+		ED7652712F8E843200411B80 /* StoreKitConfig.storekit in Resources */ = {isa = PBXBuildFile; fileRef = ED7652702F8E843200411B80 /* StoreKitConfig.storekit */; };
+		ED7652732F8E88F500411B80 /* EmojiUnlockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7652722F8E88F500411B80 /* EmojiUnlockManager.swift */; };
+		ED7652752F8E890600411B80 /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7652742F8E890600411B80 /* GameCenterManager.swift */; };
+		ED7652772F8E891800411B80 /* RewardedAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7652762F8E891800411B80 /* RewardedAdManager.swift */; };
+		ED76527A2F8E917400411B80 /* SQLiteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7652792F8E917400411B80 /* SQLiteStore.swift */; };
+		ED76527C2F8E95CC00411B80 /* EmojiMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76527B2F8E95CC00411B80 /* EmojiMatcher.swift */; };
+		ED76527E2F8E9F9E00411B80 /* AdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76527D2F8E9F9E00411B80 /* AdConstants.swift */; };
+		ED7652802F8E9F9F00411B80 /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED76527F2F8E9F9F00411B80 /* BannerAdView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4F7A2F0A2F6FF82000FAC49A /* AdConstants 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AdConstants 2.swift"; sourceTree = "<group>"; };
-		4F7A2F0C2F6FF82500FAC49A /* BannerAdView 2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BannerAdView 2.swift"; sourceTree = "<group>"; };
 		A2000001 /* ReversiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiApp.swift; sourceTree = "<group>"; };
 		A2000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A2000003 /* ReversiGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReversiGame.swift; sourceTree = "<group>"; };
@@ -28,6 +35,17 @@
 		A2000005 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		A2000006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3000001 /* Reversi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reversi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED76526A2F8E38E600411B80 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		ED76526C2F8E80CD00411B80 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
+		ED76526E2F8E81BA00411B80 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		ED7652702F8E843200411B80 /* StoreKitConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKitConfig.storekit; sourceTree = "<group>"; };
+		ED7652722F8E88F500411B80 /* EmojiUnlockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiUnlockManager.swift; sourceTree = "<group>"; };
+		ED7652742F8E890600411B80 /* GameCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterManager.swift; sourceTree = "<group>"; };
+		ED7652762F8E891800411B80 /* RewardedAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAdManager.swift; sourceTree = "<group>"; };
+		ED7652792F8E917400411B80 /* SQLiteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteStore.swift; sourceTree = "<group>"; };
+		ED76527B2F8E95CC00411B80 /* EmojiMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMatcher.swift; sourceTree = "<group>"; };
+		ED76527D2F8E9F9E00411B80 /* AdConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdConstants.swift; sourceTree = "<group>"; };
+		ED76527F2F8E9F9F00411B80 /* BannerAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,8 +77,17 @@
 				A2000004 /* BoardView.swift */,
 				A2000005 /* CellView.swift */,
 				A2000006 /* Assets.xcassets */,
-				4F7A2F0A2F6FF82000FAC49A /* AdConstants 2.swift */,
-				4F7A2F0C2F6FF82500FAC49A /* BannerAdView 2.swift */,
+				ED76526A2F8E38E600411B80 /* SoundManager.swift */,
+				ED76526C2F8E80CD00411B80 /* GameSettings.swift */,
+				ED76526E2F8E81BA00411B80 /* StoreManager.swift */,
+				ED7652702F8E843200411B80 /* StoreKitConfig.storekit */,
+				ED7652722F8E88F500411B80 /* EmojiUnlockManager.swift */,
+				ED7652742F8E890600411B80 /* GameCenterManager.swift */,
+				ED7652762F8E891800411B80 /* RewardedAdManager.swift */,
+				ED7652792F8E917400411B80 /* SQLiteStore.swift */,
+				ED76527B2F8E95CC00411B80 /* EmojiMatcher.swift */,
+				ED76527D2F8E9F9E00411B80 /* AdConstants.swift */,
+				ED76527F2F8E9F9F00411B80 /* BannerAdView.swift */,
 			);
 			path = Reversi;
 			sourceTree = "<group>";
@@ -135,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1000006 /* Assets.xcassets in Resources */,
+				ED7652712F8E843200411B80 /* StoreKitConfig.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,13 +173,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED76527C2F8E95CC00411B80 /* EmojiMatcher.swift in Sources */,
 				A1000001 /* ReversiApp.swift in Sources */,
+				ED76526B2F8E38E600411B80 /* SoundManager.swift in Sources */,
+				ED76526D2F8E80CD00411B80 /* GameSettings.swift in Sources */,
 				A1000002 /* ContentView.swift in Sources */,
+				ED7652732F8E88F500411B80 /* EmojiUnlockManager.swift in Sources */,
+				ED7652802F8E9F9F00411B80 /* BannerAdView.swift in Sources */,
+				ED7652772F8E891800411B80 /* RewardedAdManager.swift in Sources */,
 				A1000003 /* ReversiGame.swift in Sources */,
+				ED76527A2F8E917400411B80 /* SQLiteStore.swift in Sources */,
 				A1000004 /* BoardView.swift in Sources */,
-				4F7A2F0B2F6FF82100FAC49A /* AdConstants 2.swift in Sources */,
+				ED76527E2F8E9F9E00411B80 /* AdConstants.swift in Sources */,
+				ED7652752F8E890600411B80 /* GameCenterManager.swift in Sources */,
+				ED76526F2F8E81BA00411B80 /* StoreManager.swift in Sources */,
 				A1000005 /* CellView.swift in Sources */,
-				4F7A2F0D2F6FF82500FAC49A /* BannerAdView 2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

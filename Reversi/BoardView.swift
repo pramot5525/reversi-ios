@@ -11,6 +11,7 @@ struct BoardView: View {
                         CellView(
                             state: game.board[row][col],
                             isValidMove: game.isValidMove(row: row, col: col),
+                            game: game,
                             action: {
                                 game.placePiece(row: row, col: col)
                             }
@@ -19,7 +20,7 @@ struct BoardView: View {
                 }
             }
         }
-        .border(Color.black, width: 2)
-        .clipShape(RoundedRectangle(cornerRadius: 4))
+        .border(Color(red: 0.3, green: 0.5, blue: 0.2), width: 3)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
