@@ -19,7 +19,7 @@ struct AnimalPieceView: View {
                     .font(.system(size: 28))
                     .scaleEffect(isFlipping ? 0.3 : 1.0)
                     .rotationEffect(.degrees(isFlipping ? 180 : 0))
-                    .shadow(color: .black.opacity(0.3), radius: 2, x: 1, y: 2)
+                    .shadow(color: .black.opacity(0.15), radius: 2, x: 0, y: 1)
                     .transition(.scale.combined(with: .opacity))
             }
         }
@@ -63,36 +63,28 @@ struct CellView: View {
     let game: ReversiGame
     let action: () -> Void
 
-    @Environment(\.colorScheme) private var colorScheme
+    @State private var pulse = false
 
-    private var bgColor: Color {
-        colorScheme == .dark
-            ? Color(red: 0.18, green: 0.35, blue: 0.22)
-            : Color(red: 0.45, green: 0.75, blue: 0.35)
-    }
-
-    private var borderColor: Color {
-        colorScheme == .dark
-            ? Color.green.opacity(0.15)
-            : Color.green.opacity(0.3)
-    }
+    private let bgColor = Color(red: 0.75, green: 0.93, blue: 0.80)
 
     var body: some View {
         Button(action: action) {
             ZStack {
                 Rectangle()
                     .fill(bgColor)
-                    .border(borderColor, width: 0.5)
+                    .border(Color.green.opacity(0.2), width: 0.5)
 
                 if isValidMove {
                     Circle()
-                        .fill(Color.white.opacity(0.2))
-                        .padding(6)
-                        .overlay(
-                            Circle()
-                                .stroke(Color.white.opacity(0.5), lineWidth: 1.5)
-                                .padding(6)
+                        .fill(Color.mintDark.opacity(pulse ? 0.25 : 0.08))
+                        .padding(9)
+                        .scaleEffect(pulse ? 1.0 : 0.72)
+                        .animation(
+                            .easeInOut(duration: 0.85).repeatForever(autoreverses: true),
+                            value: pulse
                         )
+                        .onAppear { pulse = true }
+                        .onDisappear { pulse = false }
                 }
 
                 AnimalPieceView(state: state, game: game)

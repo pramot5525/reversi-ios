@@ -123,6 +123,12 @@ class StoreManager: ObservableObject {
     private func setAdsRemoved(_ value: Bool) {
         isAdsRemoved = value
         UserDefaults.standard.set(value, forKey: "adsRemoved")
+
+        // Award 100 bonus coins on first purchase
+        if value && !UserDefaults.standard.bool(forKey: "removeAdsCoinAwarded") {
+            UserDefaults.standard.set(true, forKey: "removeAdsCoinAwarded")
+            EmojiUnlockManager.shared.addCoins(100)
+        }
     }
     
     enum StoreError: Error {

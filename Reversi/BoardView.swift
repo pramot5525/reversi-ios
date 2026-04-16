@@ -12,15 +12,17 @@ struct BoardView: View {
                             state: game.board[row][col],
                             isValidMove: game.isValidMove(row: row, col: col),
                             game: game,
-                            action: {
-                                game.placePiece(row: row, col: col)
-                            }
+                            action: { game.placePiece(row: row, col: col) }
                         )
                     }
                 }
             }
         }
-        .border(Color(red: 0.3, green: 0.5, blue: 0.2), width: 3)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .clipShape(RoundedRectangle(cornerRadius: 14))
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .stroke(Color.mintAccent.opacity(0.3), lineWidth: 2)
+        )
+        .shadow(color: Color.black.opacity(0.08), radius: 8, y: 2)
     }
 }

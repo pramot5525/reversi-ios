@@ -25,7 +25,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.reversi.app",
+      "productID" : "com.reversi.app.removeads",
       "referenceName" : "Remove Ads",
       "type" : "NonConsumable"
     }

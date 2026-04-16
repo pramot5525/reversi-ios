@@ -86,6 +86,27 @@ enum CellState: Int {
 struct Position: Equatable {
     let row: Int
     let col: Int
+
+    var notation: String {
+        let colLetter = String(UnicodeScalar("A".unicodeScalars.first!.value + UInt32(col))!)
+        return "\(colLetter)\(row + 1)"
+    }
+}
+
+struct MoveRecord: Identifiable {
+    let id = UUID()
+    let player: Player
+    let position: Position
+    let timestamp: Date
+}
+
+struct GameSnapshot {
+    let board: [[CellState]]
+    let currentPlayer: Player
+    let gameOver: Bool
+    let winner: Player?
+    let blackCount: Int
+    let whiteCount: Int
 }
 
 @MainActor
@@ -100,10 +121,13 @@ class ReversiGame: ObservableObject {
     @Published var whiteCount: Int = 2
     @Published var validMoves: [Position] = []
     @Published var isAIThinking: Bool = false
-    
+    @Published var moveHistory: [MoveRecord] = []
+
     // Piece for each player (any emoji!)
     @Published var player1Piece: PieceOption = .defaultPlayer
     @Published var player2Piece: PieceOption = .defaultAI
+
+    private var undoStack: [GameSnapshot] = []
 
     // Player 2 is always AI
     private let aiPlayer: Player = .white
@@ -146,8 +170,42 @@ class ReversiGame: ObservableObject {
         gameOver = false
         winner = nil
         isAIThinking = false
+        moveHistory = []
+        undoStack = []
         setupInitialPieces()
         updateCounts()
+        updateValidMoves()
+    }
+
+    private func saveSnapshot() {
+        undoStack.append(GameSnapshot(
+            board: board, currentPlayer: currentPlayer,
+            gameOver: gameOver, winner: winner,
+            blackCount: blackCount, whiteCount: whiteCount
+        ))
+    }
+
+    var canUndo: Bool { !undoStack.isEmpty && !isAIThinking }
+
+    func undo() {
+        guard let snapshot = undoStack.popLast() else { return }
+        board = snapshot.board
+        currentPlayer = snapshot.currentPlayer
+        gameOver = snapshot.gameOver
+        winner = snapshot.winner
+        blackCount = snapshot.blackCount
+        whiteCount = snapshot.whiteCount
+        if !moveHistory.isEmpty { moveHistory.removeLast() }
+        // If we undid an AI move too, undo the player's move as well
+        if currentPlayer == aiPlayer, let prev = undoStack.popLast() {
+            board = prev.board
+            currentPlayer = prev.currentPlayer
+            gameOver = prev.gameOver
+            winner = prev.winner
+            blackCount = prev.blackCount
+            whiteCount = prev.whiteCount
+            if !moveHistory.isEmpty { moveHistory.removeLast() }
+        }
         updateValidMoves()
     }
 
@@ -158,6 +216,9 @@ class ReversiGame: ObservableObject {
 
         let flipped = flippedPieces(row: row, col: col, player: currentPlayer)
         guard !flipped.isEmpty else { return }
+
+        saveSnapshot()
+        moveHistory.append(MoveRecord(player: currentPlayer, position: Position(row: row, col: col), timestamp: Date()))
 
         // Speak the piece sound
         SoundManager.shared.speakPiece(pieceForPlayer(currentPlayer))
