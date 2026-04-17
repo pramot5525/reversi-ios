@@ -140,7 +140,9 @@ class EmojiUnlockManager: ObservableObject {
             do {
                 try await GKLocalPlayer.local.saveGameData(data, withName: Self.savedGameName)
             } catch {
+                #if DEBUG
                 print("Failed to save to Game Center: \(error)")
+                #endif
             }
         }
     }
@@ -178,7 +180,9 @@ class EmojiUnlockManager: ObservableObject {
                 }
             }
         } catch {
+            #if DEBUG
             print("Failed to sync from Game Center: \(error)")
+            #endif
         }
     }
 

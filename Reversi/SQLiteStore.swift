@@ -22,7 +22,9 @@ final class SQLiteStore {
         let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("reversi.sqlite")
         if sqlite3_open(fileURL.path, &db) != SQLITE_OK {
+            #if DEBUG
             print("SQLite: Failed to open database")
+            #endif
         }
     }
 
@@ -114,7 +116,9 @@ final class SQLiteStore {
         var errMsg: UnsafeMutablePointer<CChar>?
         if sqlite3_exec(db, sql, nil, nil, &errMsg) != SQLITE_OK {
             if let errMsg {
+                #if DEBUG
                 print("SQLite error: \(String(cString: errMsg))")
+                #endif
                 sqlite3_free(errMsg)
             }
         }

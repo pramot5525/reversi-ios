@@ -17,7 +17,9 @@ class GameCenterManager: ObservableObject {
         GKLocalPlayer.local.authenticateHandler = { [weak self] viewController, error in
             Task { @MainActor in
                 if let error {
+                    #if DEBUG
                     print("Game Center auth error: \(error.localizedDescription)")
+                    #endif
                     return
                 }
 
@@ -49,7 +51,9 @@ class GameCenterManager: ObservableObject {
                     leaderboardIDs: [Self.leaderboardID]
                 )
             } catch {
+                #if DEBUG
                 print("Failed to submit score: \(error)")
+                #endif
             }
         }
     }

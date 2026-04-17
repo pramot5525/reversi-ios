@@ -5,8 +5,11 @@ import UIKit
 class RewardedAdManager: NSObject, ObservableObject, FullScreenContentDelegate {
     static let shared = RewardedAdManager()
 
-    // Test rewarded ad unit ID — replace with your real one for production
+    #if DEBUG
     static let adUnitID = "ca-app-pub-3940256099942544/1712485313"
+    #else
+    static let adUnitID = "ca-app-pub-3591885168954129/REPLACE_WITH_REAL_REWARDED_ID"
+    #endif
 
     @Published var isAdReady = false
     @Published var isLoading = false
@@ -35,7 +38,9 @@ class RewardedAdManager: NSObject, ObservableObject, FullScreenContentDelegate {
             rewardedAd = ad
             isAdReady = true
         } catch {
+            #if DEBUG
             print("Failed to load rewarded ad: \(error)")
+            #endif
             isAdReady = false
         }
         isLoading = false
@@ -88,7 +93,9 @@ class RewardedAdManager: NSObject, ObservableObject, FullScreenContentDelegate {
     }
 
     nonisolated func ad(_ ad: FullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        #if DEBUG
         print("Rewarded ad failed to present: \(error)")
+        #endif
         Task { @MainActor in
             rewardedAd = nil
             isAdReady = false
