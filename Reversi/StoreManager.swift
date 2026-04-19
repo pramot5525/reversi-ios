@@ -38,9 +38,7 @@ class StoreManager: ObservableObject {
             let products = try await Product.products(for: [Self.removeAdsID])
             removeAdsProduct = products.first
         } catch {
-            #if DEBUG
             print("Failed to load products: \(error)")
-            #endif
         }
     }
     
@@ -68,9 +66,7 @@ class StoreManager: ObservableObject {
                 break
             }
         } catch {
-            #if DEBUG
             print("Purchase failed: \(error)")
-            #endif
         }
     }
     

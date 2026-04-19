@@ -100,10 +100,14 @@ struct EmojiSelectionView: View {
             // Header
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 1) {
-                    Text("REVERMOJI")
+                    Text("REVERSI")
                         .font(.system(size: 28, weight: .black, design: .rounded))
                         .tracking(2)
                         .foregroundColor(.mintPurple)
+                    Text("EMOJI")
+                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                        .tracking(4)
+                        .foregroundColor(.mintDark.opacity(0.6))
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 6) {
@@ -369,7 +373,7 @@ struct GameView: View {
 
                     Spacer()
 
-                    Text("REVERMOJI")
+                    Text("REVERSI EMOJI")
                         .font(.system(size: 18, weight: .heavy, design: .rounded).italic())
                         .foregroundColor(.mintPurple)
 
