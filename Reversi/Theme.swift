@@ -83,19 +83,20 @@ struct GlossyButton: ViewModifier {
     }
 }
 
-/// Translucent tinted capsule for badges/score boxes.
+/// Frosted tinted capsule for badges. Uses a true SwiftUI material so it
+/// adapts to the backdrop and light/dark mode, with a subtle color wash.
 struct GlassChip: ViewModifier {
     var tint: Color
     func body(content: Content) -> some View {
-        content.background(
-            Capsule()
-                .fill(tint.opacity(0.14))
-                .overlay(
-                    Capsule()
-                        .stroke(Color.white.opacity(0.5), lineWidth: 1)
-                        .blendMode(.overlay)
-                )
-        )
+        content
+            .background {
+                Capsule()
+                    .fill(.regularMaterial)
+                    .overlay(Capsule().fill(tint.opacity(0.18)))
+            }
+            .overlay(
+                Capsule().strokeBorder(Color.white.opacity(0.4), lineWidth: 0.5)
+            )
     }
 }
 

@@ -116,6 +116,7 @@ struct EmojiSelectionView: View {
                             .font(.system(size: 20))
                             .foregroundColor(.mintPurple.opacity(0.6))
                     }
+                    .accessibilityLabel("Settings")
                     statBadge(icon: "dollarsign.circle.fill", value: "\(unlockManager.coins)", color: .mintGold)
                     statBadge(icon: "lock.open.fill", value: "\(unlockManager.unlockedCount)/\(PieceOption.allPieces.count)", color: .mintPurple)
                 }
@@ -164,6 +165,7 @@ struct EmojiSelectionView: View {
                                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.mintGold.opacity(0.3), lineWidth: 1))
                         )
                     }
+                    .accessibilityLabel("Watch ad to earn a coin")
                 }
             }
             .padding(14)
@@ -185,6 +187,7 @@ struct EmojiSelectionView: View {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(.gray.opacity(0.4))
                     }.buttonStyle(.plain)
+                    .accessibilityLabel("Clear search")
                 }
             }
             .padding(10)
@@ -356,6 +359,7 @@ struct GameView: View {
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(.mintPurple)
                     }
+                    .accessibilityLabel("Back")
 
                     Spacer()
 
@@ -370,6 +374,7 @@ struct GameView: View {
                             .font(.system(size: 18))
                             .foregroundColor(.mintPurple.opacity(0.6))
                     }
+                    .accessibilityLabel("Settings")
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
