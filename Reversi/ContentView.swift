@@ -654,7 +654,7 @@ struct SettingsView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 10)
             }
-            .background(Color.mintBG.ignoresSafeArea())
+            .background(AnimatedBackground())
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -679,11 +679,7 @@ struct SettingsView: View {
             VStack(spacing: 0) {
                 content()
             }
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.04), radius: 4, y: 2)
-            )
+            .glossyCard()
 
             if !footer.isEmpty {
                 Text(footer)
