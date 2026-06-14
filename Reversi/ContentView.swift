@@ -397,14 +397,14 @@ struct GameView: View {
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 10)
-                                .background(Capsule().fill(isPlayer ? Color.mintAccent : Color.red.opacity(0.7)))
+                                .glossyPill(color: isPlayer ? Color.mintAccent : Color.red.opacity(0.7))
                             } else {
                                 Text("DRAW!")
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
                                     .foregroundColor(.white)
                                     .padding(.horizontal, 16)
                                     .padding(.vertical, 10)
-                                    .background(Capsule().fill(Color.orange))
+                                    .glossyPill(color: Color.orange)
                             }
                         } else if game.isAIThinking {
                             HStack(spacing: 6) {
@@ -416,7 +416,7 @@ struct GameView: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 10)
-                            .background(Capsule().fill(Color.mintAccent))
+                            .glossyPill(color: Color.mintAccent)
                         } else {
                             HStack(spacing: 6) {
                                 Text(game.player1Piece.emoji).font(.system(size: 16))
@@ -427,7 +427,7 @@ struct GameView: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 10)
-                            .background(Capsule().fill(Color.mintAccent))
+                            .glossyPill(color: Color.mintAccent)
                         }
                     }
 
@@ -467,10 +467,9 @@ struct GameView: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.mintDark)
-                    )
+                    .glossyButton(cornerRadius: 12,
+                                  gradient: LinearGradient(colors: [Color.mintDark, Theme.mintDeep],
+                                                           startPoint: .top, endPoint: .bottom))
                 }
                 .disabled(game.gameOver)
                 .opacity(game.gameOver ? 0.5 : 1.0)
@@ -491,10 +490,7 @@ struct GameView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.mintAccent)
-                        )
+                        .glossyButton(cornerRadius: 12)
                     }
                     .padding(.horizontal, 20)
                 }
@@ -506,10 +502,10 @@ struct GameView: View {
             if !store.isAdsRemoved {
                 BannerAdView(adUnitID: AdConstants.bannerAdUnitID)
                     .frame(height: 50)
-                    .background(Color.mintBG)
+                    .background(Color.mintBG.opacity(0.85))
             }
         }
-        .background(Color.mintBG.ignoresSafeArea())
+        .background(AnimatedBackground())
         .alert("Coins Earned!", isPresented: $unlockManager.showCoinEarnedAlert) {
             Button("OK") {}
         } message: {
@@ -534,11 +530,7 @@ struct ScoreBox: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.white)
-                .shadow(color: .black.opacity(0.06), radius: 4, y: 1)
-        )
+        .glossyCard(cornerRadius: 10)
     }
 }
 
