@@ -188,11 +188,7 @@ struct EmojiSelectionView: View {
                 }
             }
             .padding(10)
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.04), radius: 4, y: 1)
-            )
+            .glossyCard(cornerRadius: 10)
             .padding(.horizontal, 20)
             .padding(.bottom, 10)
 
