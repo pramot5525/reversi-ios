@@ -44,3 +44,118 @@ enum Theme {
         Color(red: 0.83, green: 0.95, blue: 0.87)
     ]
 }
+
+// MARK: - Glossy Modifiers
+
+/// White→pale-mint gradient surface with soft shadow and a glossy top highlight.
+struct GlossyCard: ViewModifier {
+    var cornerRadius: CGFloat = 16
+    func body(content: Content) -> some View {
+        content.background(
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .fill(Theme.cardGradient)
+                .overlay(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(Color.white.opacity(0.6), lineWidth: 1)
+                        .blendMode(.overlay)
+                )
+                .shadow(color: .black.opacity(0.10), radius: 8, y: 3)
+        )
+    }
+}
+
+/// Glossy gradient button surface with tinted shadow and top highlight.
+struct GlossyButton: ViewModifier {
+    var cornerRadius: CGFloat = 14
+    var gradient: LinearGradient = Theme.buttonGradient
+    var shadowColor: Color = Theme.mintDeep
+    func body(content: Content) -> some View {
+        content.background(
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .fill(gradient)
+                .overlay(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(Color.white.opacity(0.35), lineWidth: 1)
+                        .blendMode(.overlay)
+                )
+                .shadow(color: shadowColor.opacity(0.40), radius: 8, y: 4)
+        )
+    }
+}
+
+/// Translucent tinted capsule for badges/score boxes.
+struct GlassChip: ViewModifier {
+    var tint: Color
+    func body(content: Content) -> some View {
+        content.background(
+            Capsule()
+                .fill(tint.opacity(0.14))
+                .overlay(
+                    Capsule()
+                        .stroke(Color.white.opacity(0.5), lineWidth: 1)
+                        .blendMode(.overlay)
+                )
+        )
+    }
+}
+
+/// Solid-color capsule with a glossy top highlight (for the turn indicator chip).
+struct GlossyPill: ViewModifier {
+    var color: Color
+    func body(content: Content) -> some View {
+        content.background(
+            Capsule()
+                .fill(color)
+                .overlay(
+                    Capsule().fill(
+                        LinearGradient(colors: [Color.white.opacity(0.35), Color.clear],
+                                       startPoint: .top, endPoint: .center)
+                    )
+                )
+                .shadow(color: color.opacity(0.40), radius: 6, y: 3)
+        )
+    }
+}
+
+extension View {
+    func glossyCard(cornerRadius: CGFloat = 16) -> some View {
+        modifier(GlossyCard(cornerRadius: cornerRadius))
+    }
+    func glossyButton(cornerRadius: CGFloat = 14,
+                      gradient: LinearGradient = Theme.buttonGradient,
+                      shadowColor: Color = Theme.mintDeep) -> some View {
+        modifier(GlossyButton(cornerRadius: cornerRadius, gradient: gradient, shadowColor: shadowColor))
+    }
+    func glassChip(tint: Color) -> some View {
+        modifier(GlassChip(tint: tint))
+    }
+    func glossyPill(color: Color) -> some View {
+        modifier(GlossyPill(color: color))
+    }
+}
+
+// MARK: - Animated Background
+
+/// Slowly drifting mint gradient. Falls back to a static gradient under Reduce Motion.
+struct AnimatedBackground: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var animate = false
+
+    var body: some View {
+        GeometryReader { geo in
+            LinearGradient(colors: Theme.bgColors,
+                           startPoint: .topLeading, endPoint: .bottomTrailing)
+                // Oversize so rotation never exposes empty corners.
+                .frame(width: geo.size.width * 1.5, height: geo.size.height * 1.5)
+                .rotationEffect(.degrees(animate ? 18 : -18))
+                .position(x: geo.size.width / 2, y: geo.size.height / 2)
+        }
+        .ignoresSafeArea()
+        .onAppear {
+            guard !reduceMotion else { return }
+            withAnimation(.easeInOut(duration: 12).repeatForever(autoreverses: true)) {
+                animate = true
+            }
+        }
+    }
+}
