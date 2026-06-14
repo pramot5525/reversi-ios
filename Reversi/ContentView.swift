@@ -167,11 +167,7 @@ struct EmojiSelectionView: View {
                 }
             }
             .padding(14)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.06), radius: 8, y: 2)
-            )
+            .glossyCard()
             .padding(.horizontal, 20)
             .padding(.bottom, 12)
 
@@ -241,11 +237,7 @@ struct EmojiSelectionView: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
-                    .background(
-                        RoundedRectangle(cornerRadius: 14)
-                            .fill(Color.mintDark)
-                            .shadow(color: .mintDark.opacity(0.3), radius: 8, y: 4)
-                    )
+                    .glossyButton()
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 10)
@@ -255,9 +247,9 @@ struct EmojiSelectionView: View {
                     BannerAdView(adUnitID: AdConstants.bannerAdUnitID).frame(height: 50)
                 }
             }
-            .background(Color.mintBG)
+            .background(Color.mintBG.opacity(0.85))
         }
-        .background(Color.mintBG.ignoresSafeArea())
+        .background(AnimatedBackground())
         .alert("Locked Emoji", isPresented: $showLockedAlert) {
             if unlockManager.coins >= 1 {
                 Button("Unlock for 1 Coin") {
@@ -316,9 +308,7 @@ struct EmojiSelectionView: View {
                     .padding(.vertical, 5)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(isSelected
-                                  ? Color.mintAccent.opacity(0.15)
-                                  : Color.white.opacity(isLocked ? 0.4 : 0.8))
+                            .fill(isSelected ? Theme.cellSelectedGradient : Theme.cellGradient)
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -347,7 +337,7 @@ struct EmojiSelectionView: View {
         .foregroundColor(color)
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
-        .background(Capsule().fill(color.opacity(0.10)))
+        .glassChip(tint: color)
     }
 }
 
