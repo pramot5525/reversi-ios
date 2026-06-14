@@ -116,6 +116,7 @@ struct EmojiSelectionView: View {
                             .font(.system(size: 20))
                             .foregroundColor(.mintPurple.opacity(0.6))
                     }
+                    .accessibilityLabel("Settings")
                     statBadge(icon: "dollarsign.circle.fill", value: "\(unlockManager.coins)", color: .mintGold)
                     statBadge(icon: "lock.open.fill", value: "\(unlockManager.unlockedCount)/\(PieceOption.allPieces.count)", color: .mintPurple)
                 }
@@ -164,14 +165,11 @@ struct EmojiSelectionView: View {
                                 .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.mintGold.opacity(0.3), lineWidth: 1))
                         )
                     }
+                    .accessibilityLabel("Watch ad to earn a coin")
                 }
             }
             .padding(14)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.06), radius: 8, y: 2)
-            )
+            .glossyCard()
             .padding(.horizontal, 20)
             .padding(.bottom, 12)
 
@@ -189,14 +187,11 @@ struct EmojiSelectionView: View {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(.gray.opacity(0.4))
                     }.buttonStyle(.plain)
+                    .accessibilityLabel("Clear search")
                 }
             }
             .padding(10)
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.04), radius: 4, y: 1)
-            )
+            .glossyCard(cornerRadius: 10)
             .padding(.horizontal, 20)
             .padding(.bottom, 10)
 
@@ -241,11 +236,7 @@ struct EmojiSelectionView: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 16)
-                    .background(
-                        RoundedRectangle(cornerRadius: 14)
-                            .fill(Color.mintDark)
-                            .shadow(color: .mintDark.opacity(0.3), radius: 8, y: 4)
-                    )
+                    .glossyButton()
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 10)
@@ -255,9 +246,9 @@ struct EmojiSelectionView: View {
                     BannerAdView(adUnitID: AdConstants.bannerAdUnitID).frame(height: 50)
                 }
             }
-            .background(Color.mintBG)
+            .background(Color.mintBG.opacity(0.85))
         }
-        .background(Color.mintBG.ignoresSafeArea())
+        .background(AnimatedBackground())
         .alert("Locked Emoji", isPresented: $showLockedAlert) {
             if unlockManager.coins >= 1 {
                 Button("Unlock for 1 Coin") {
@@ -316,9 +307,7 @@ struct EmojiSelectionView: View {
                     .padding(.vertical, 5)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(isSelected
-                                  ? Color.mintAccent.opacity(0.15)
-                                  : Color.white.opacity(isLocked ? 0.4 : 0.8))
+                            .fill(isSelected ? Theme.cellSelectedGradient : Theme.cellGradient)
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -347,7 +336,7 @@ struct EmojiSelectionView: View {
         .foregroundColor(color)
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
-        .background(Capsule().fill(color.opacity(0.10)))
+        .glassChip(tint: color)
     }
 }
 
@@ -370,6 +359,7 @@ struct GameView: View {
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(.mintPurple)
                     }
+                    .accessibilityLabel("Back")
 
                     Spacer()
 
@@ -384,6 +374,7 @@ struct GameView: View {
                             .font(.system(size: 18))
                             .foregroundColor(.mintPurple.opacity(0.6))
                     }
+                    .accessibilityLabel("Settings")
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
@@ -407,14 +398,14 @@ struct GameView: View {
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 10)
-                                .background(Capsule().fill(isPlayer ? Color.mintAccent : Color.red.opacity(0.7)))
+                                .glossyPill(color: isPlayer ? Color.mintAccent : Color.red.opacity(0.7))
                             } else {
                                 Text("DRAW!")
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
                                     .foregroundColor(.white)
                                     .padding(.horizontal, 16)
                                     .padding(.vertical, 10)
-                                    .background(Capsule().fill(Color.orange))
+                                    .glossyPill(color: Color.orange)
                             }
                         } else if game.isAIThinking {
                             HStack(spacing: 6) {
@@ -426,7 +417,7 @@ struct GameView: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 10)
-                            .background(Capsule().fill(Color.mintAccent))
+                            .glossyPill(color: Color.mintAccent)
                         } else {
                             HStack(spacing: 6) {
                                 Text(game.player1Piece.emoji).font(.system(size: 16))
@@ -437,7 +428,7 @@ struct GameView: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 10)
-                            .background(Capsule().fill(Color.mintAccent))
+                            .glossyPill(color: Color.mintAccent)
                         }
                     }
 
@@ -477,10 +468,9 @@ struct GameView: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.mintDark)
-                    )
+                    .glossyButton(cornerRadius: 12,
+                                  gradient: LinearGradient(colors: [Color.mintDark, Theme.mintDeep],
+                                                           startPoint: .top, endPoint: .bottom))
                 }
                 .disabled(game.gameOver)
                 .opacity(game.gameOver ? 0.5 : 1.0)
@@ -501,10 +491,7 @@ struct GameView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 14)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.mintAccent)
-                        )
+                        .glossyButton(cornerRadius: 12)
                     }
                     .padding(.horizontal, 20)
                 }
@@ -516,10 +503,10 @@ struct GameView: View {
             if !store.isAdsRemoved {
                 BannerAdView(adUnitID: AdConstants.bannerAdUnitID)
                     .frame(height: 50)
-                    .background(Color.mintBG)
+                    .background(Color.mintBG.opacity(0.85))
             }
         }
-        .background(Color.mintBG.ignoresSafeArea())
+        .background(AnimatedBackground())
         .alert("Coins Earned!", isPresented: $unlockManager.showCoinEarnedAlert) {
             Button("OK") {}
         } message: {
@@ -544,11 +531,7 @@ struct ScoreBox: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.white)
-                .shadow(color: .black.opacity(0.06), radius: 4, y: 1)
-        )
+        .glossyCard(cornerRadius: 10)
     }
 }
 
@@ -672,7 +655,7 @@ struct SettingsView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 10)
             }
-            .background(Color.mintBG.ignoresSafeArea())
+            .background(AnimatedBackground())
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -697,11 +680,7 @@ struct SettingsView: View {
             VStack(spacing: 0) {
                 content()
             }
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.04), radius: 4, y: 2)
-            )
+            .glossyCard()
 
             if !footer.isEmpty {
                 Text(footer)

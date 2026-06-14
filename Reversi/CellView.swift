@@ -19,7 +19,7 @@ struct AnimalPieceView: View {
                     .font(.system(size: 28))
                     .scaleEffect(isFlipping ? 0.3 : 1.0)
                     .rotationEffect(.degrees(isFlipping ? 180 : 0))
-                    .shadow(color: .black.opacity(0.15), radius: 2, x: 0, y: 1)
+                    .shadow(color: .black.opacity(0.25), radius: 3, x: 0, y: 2)
                     .transition(.scale.combined(with: .opacity))
             }
         }
@@ -65,20 +65,28 @@ struct CellView: View {
 
     @State private var pulse = false
 
-    private let bgColor = Color(red: 0.75, green: 0.93, blue: 0.80)
-
     var body: some View {
         Button(action: action) {
             ZStack {
-                Rectangle()
-                    .fill(bgColor)
-                    .border(Color.green.opacity(0.2), width: 0.5)
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(Theme.cellGradient)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(Color.white.opacity(0.5), lineWidth: 0.5)
+                            .blendMode(.overlay)
+                    )
 
                 if isValidMove {
                     Circle()
-                        .fill(Color.mintDark.opacity(pulse ? 0.25 : 0.08))
-                        .padding(9)
-                        .scaleEffect(pulse ? 1.0 : 0.72)
+                        .fill(
+                            RadialGradient(
+                                colors: [Theme.mintDeep.opacity(0.55), Theme.boardLow.opacity(0.0)],
+                                center: .center, startRadius: 0, endRadius: 14
+                            )
+                        )
+                        .padding(7)
+                        .scaleEffect(pulse ? 1.0 : 0.7)
+                        .opacity(pulse ? 0.9 : 0.45)
                         .animation(
                             .easeInOut(duration: 0.85).repeatForever(autoreverses: true),
                             value: pulse
