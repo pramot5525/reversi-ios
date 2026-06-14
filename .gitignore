@@ -22,6 +22,9 @@ Pods/
 *.swp
 *~
 
+# Superpowers brainstorming
+.superpowers/
+
 # Secrets (ถ้ามีในอนาคต)
 .env
 *.key
